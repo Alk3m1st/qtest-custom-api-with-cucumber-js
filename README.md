@@ -4,6 +4,8 @@ This node JS script is built from / inspired by the [QA Symphony Samples](https:
 
 The difference is that this script is meant specifically for Cucumber JSON reports rather than Newman. Other differences include the ability to automatically create Test Cases and Test Runs from the Scenario names in the Cucumber reports. After that it will update executions into the correct Test Runs for each execution. Credentials are supported in a JSON file or using environment variables. Ideally in the future it will be possible to specify a Test Suite but this is a starting point.
 
+This script is built around using the qTest APIs documented on [the Tricentis site](https://documentation.tricentis.com/qtest/9910/en/content/qtest_apis/apis_sdks/how_to_use_interactive_api_documentation.htm).
+
 ## Set-up
 
 To enable this script to run, qTest must be configured appropriately first.
