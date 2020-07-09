@@ -1,0 +1,23 @@
+NAME
+    uploadToQTest
+
+SYNOPSIS
+
+    uploadToQTest [options]
+
+DESCRIPTION
+
+    Uploads the given Cucumber JS report to qTest Manager as test execution results linking to existing test cases
+
+USAGE
+    -f file             Test result file
+    
+    -c credentials      The file that has the appropriate qTest Credentials for this script.
+                        It should be json content like:
+                        {
+                        email: "Elise",
+                        password: "password",
+                        qtesturl: "https://qas.qtestnet.com",
+                        project: "API Automation Integration Demo Project"
+                        }
+                        If you are not supplying a credentials file then those variables must be defined in the environment

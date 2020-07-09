@@ -1,0 +1,160 @@
+[
+  {
+    "description": "We want to have confidence the web server is able to serve traffic",
+    "keyword": "Feature",
+    "name": "Automation Test Case 1",
+    "line": 1,
+    "id": "is-the-web-server-alive?",
+    "tags": [],
+    "uri": "features\\is_web_server_alive.feature",
+    "elements": [
+      {
+        "id": "is-the-web-server-alive?;web-server-returns-a-200-status-(ok)",
+        "keyword": "Scenario",
+        "line": 4,
+        "name": "Web Server returns a 200 status (OK)",
+        "tags": [],
+        "type": "scenario",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 5,
+            "name": "we visit the web server root domain",
+            "match": {
+              "location": "features\\step_definitions\\stepdefs.js:18"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 6,
+            "name": "we send a HTTP request",
+            "match": {
+              "location": "features\\step_definitions\\stepdefs.js:22"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 414000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 7,
+            "name": "we should see a status code of 200",
+            "match": {
+              "location": "features\\step_definitions\\stepdefs.js:26"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1000000
+            }
+          }
+        ]
+      },
+      {
+        "id": "is-the-web-server-alive?;web-server-is-returning-text/html-content-type",
+        "keyword": "Scenario",
+        "line": 9,
+        "name": "Web Server is returning text/html content type",
+        "tags": [],
+        "type": "scenario",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 10,
+            "name": "we visit the web server root domain",
+            "match": {
+              "location": "features\\step_definitions\\stepdefs.js:18"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 11,
+            "name": "we send a HTTP request",
+            "match": {
+              "location": "features\\step_definitions\\stepdefs.js:22"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 373000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 12,
+            "name": "we should get back a Content-Type of 'text/html'",
+            "match": {
+              "location": "features\\step_definitions\\stepdefs.js:30"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 0
+            }
+          }
+        ]
+      },
+      {
+        "id": "is-the-web-server-alive?;web-server-should-respond-in-a-timely-manner",
+        "keyword": "Scenario",
+        "line": 14,
+        "name": "Web Server should respond in a timely manner",
+        "tags": [],
+        "type": "scenario",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 15,
+            "name": "we visit the web server root domain",
+            "match": {
+              "location": "features\\step_definitions\\stepdefs.js:18"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 16,
+            "name": "we send a HTTP request",
+            "match": {
+              "location": "features\\step_definitions\\stepdefs.js:22"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 274000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 17,
+            "name": "we should receive a response within 1000 milliseconds",
+            "match": {
+              "location": "features\\step_definitions\\stepdefs.js:34"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 0
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "name": "qtest-custom-api-with-cucumber-js",
+  "version": "1.0.0",
+  "description": "Takes cucumber js test output and uploads to qTest project",
+  "main": "uploadToQTest.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Allan Oliveira",
+  "license": "ISC",
+  "dependencies": {
+    "command-line-args": "^4.0.6",
+    "node-fetch": "^2.6.0"
+  }
+}
