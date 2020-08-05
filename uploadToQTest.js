@@ -31,13 +31,15 @@ Main(creds);
 
 async function Main(creds) {
   const token = await Login(creds);
-  FindAndUploadResults(token);
+  await FindAndUploadResults(token);
+
+  process.exit(0);
 }
 
-function FindAndUploadResults(token) {
+async function FindAndUploadResults(token) {
   var executionResults = ParseResultsFile();
 
-  executionResults.forEach(async function (run, index) {
+  for (const run of executionResults) {
     let testCaseId = 0;
     // Is there a matching test case for the scenario/run?
     let matchingTestCases = await GetTestCaseForScenario(run.name, token);
@@ -76,7 +78,7 @@ function FindAndUploadResults(token) {
     }
 
     await UploadResults(run, testRunId, token);
-  });
+  }
 }
 
 async function UploadResults(run, testRunId, token) {
