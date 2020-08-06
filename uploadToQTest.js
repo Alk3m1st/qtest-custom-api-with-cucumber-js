@@ -1,8 +1,8 @@
 const commandLineArgs = require("command-line-args");
-const fetch = require("node-fetch");
 const fs = require("fs");
 const apiUtils = require("./utils/api-utils");
 const credsHelper = require("./utils/credential-helper");
+const reportParser = require("./utils/report-parser");
 
 const optionDefinitions = [
   { name: "file", alias: "f", type: String },
@@ -25,20 +25,20 @@ HandleOptions(options, function (err) {
   }
 });
 
-const creds = credsHelper.CredentialsHelper(options.credentials);
+const creds = credsHelper.LoadCredentials(options.credentials);
 
 Main(creds);
 
 async function Main(creds) {
-  const token = await Login(creds);
-  await FindAndUploadResults(token);
+  const token = await credsHelper.Login(creds);
+  const executionResults = reportParser.ParseResultsFile(options.file);
+
+  await FindAndUploadResults(executionResults, token);
 
   process.exit(0);
 }
 
-async function FindAndUploadResults(token) {
-  var executionResults = ParseResultsFile();
-
+async function FindAndUploadResults(executionResults, token) {
   for (const run of executionResults) {
     let testCaseId = 0;
     // Is there a matching test case for the scenario/run?
@@ -124,80 +124,6 @@ async function UploadResults(run, testRunId, token) {
       " and test case version id: " +
       response.test_case_version_id
   );
-}
-
-function ParseResultsFile() {
-  var executionResults = [];
-
-  // Grab results file
-  var resultsCucumber = JSON.parse(fs.readFileSync(options.file, "utf8"));
-  resultsCucumber.forEach((feature, index) => {
-    let testCaseId = "1155576";
-
-    feature.elements.forEach((scenario, index) => {
-      let stepResults = [];
-
-      // Create the test run log that we will upload later
-      var execution = {
-        name: scenario.name,
-        status: "PASS",
-        testCaseId: testCaseId,
-      };
-
-      scenario.steps.forEach((step, index) => {
-        let stepResult = {
-          description: `${step.keyword}${step.name}`,
-          expected_result: `step ${index + 1} expected`,
-          actual_result: `Execution time: ${step.result.duration / 1000000}ms`,
-          status: step.result.status === "passed" ? "pass" : "fail",
-          order: index,
-        };
-
-        stepResults.push(stepResult);
-      });
-
-      execution.testStepLogs = stepResults.slice(0);
-      executionResults.push(execution);
-    });
-  });
-
-  console.log(executionResults);
-
-  return executionResults;
-}
-
-async function Login(creds) {
-  // NOTE: The documentation says to leave the password empty here so
-  //   it's just the email and colon encoded
-  const auth = "Basic " + Buffer.from(creds.email + ":").toString("base64");
-  const url = "http://" + creds.url + "/oauth/token";
-  const params = new URLSearchParams();
-  params.append("grant_type", "password");
-  params.append("username", creds.email);
-  params.append("password", creds.password);
-
-  const payload = {
-    method: "post",
-    headers: {
-      //'Content-Type': 'application/x-www-form-urlencoded',
-      Authorization: auth,
-    },
-    body: params,
-  };
-  const response = await fetch(url, payload);
-
-  try {
-    console.log("Response.ok?: ", response.ok); // Check res.ok for status 200s/300s
-    const json = await response.json();
-    if (!json.access_token) {
-      HandleErrorAndExit("Unable to log in: " + json);
-    }
-
-    return json.access_token;
-  } catch (error) {
-    console.log("Error occurred");
-    HandleErrorAndExit("Error logging in: " + error);
-  }
 }
 
 function HandleErrorAndExit(err) {
